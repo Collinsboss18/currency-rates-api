@@ -3,10 +3,11 @@
  * @file App Index Controller
  */
 
-const { type } = require("os");
-
-let base;
+const axios = require('axios');
+let fullResponse;
 let currencies;
+let rates;
+let base;
 
 class Index {
 	/**
@@ -18,14 +19,16 @@ class Index {
 		currencies = req.query.currency;
 
 		return new Promise((resolve, reject) => {
-            let currencyType = Index.getCurrencyType(currencies);
-            console.log(currencyType);
-
-        }).catch((err) => {
+			axios({ method: 'get', url: `https://api.exchangeratesapi.io/latest?base=${base}` })
+				.then(function (response) {
+					rates = response.data.rates;
+					fullResponse = response.data;
+				})
+				.catch((error) => reject(new Error(error)));
+		}).catch((err) => {
 			console.log(err);
-			return res.status(401).json(await Index.response('Server error try later', url));
+			return res.status(500).json({ message: 'Error. Try again...' });
 		});
-
 	}
 
 	/**
@@ -34,15 +37,15 @@ class Index {
 	 */
 	static async getCurrencyType(req, res) {
 		try {
-			if (typeof currencies === 'string' || currencies instanceof String) return {type: String};
-			if (Array.isArray(currencies)) return {type: Object};
+			if (typeof currencies === 'string' || currencies instanceof String) return { type: 'STRING' };
+			if (Array.isArray(currencies)) return { type: 'OBJECT' };
 		} catch (error) {
 			console.log('error', error);
 			return false;
 		}
-    }
+	}
 
-    /**
+	/**
 	 * @description Method that respond if error
 	 * @returns Object
 	 */

@@ -14,15 +14,15 @@ class Index {
 		try {
 			if (req.query.base && req.query.currency) {
 				if (await Index.verifyBaseQuery(req.query.base)) {
-					if (await Index.verifyCurrencyQuery(req.query.currency)) {
-						next();
-					}
-					return res.status(401).json(await Index.response('Unable to verify currency params', url));
+					(await Index.verifyCurrencyQuery(req.query.currency))
+						? next()
+						: res.status(401).json(await Index.response('Unable to verify currency params', url));
 				} else {
 					return res.status(401).json(await Index.response('Unable to verify base param', url));
 				}
+			} else {
+				return res.status(401).json(await Index.response('Unable to verify query. Check that all query are set', url));
 			}
-			return res.status(401).json(await Index.response('Unable to verify query. Check that all query are set', url));
 		} catch (err) {
 			console.log(err);
 			return res.status(401).json(await Index.response('Unable to verify query. Check that all query are set', url));
@@ -31,6 +31,7 @@ class Index {
 
 	/**
 	 * @description Method to verify base query
+	 * @param base String (base string e.g USD)
 	 * @returns Boolean
 	 */
 	static async verifyBaseQuery(base) {
@@ -45,6 +46,7 @@ class Index {
 
 	/**
 	 * @description Method to verify currency query
+	 * @param currencies String / Array
 	 * @returns Boolean
 	 */
 	static async verifyCurrencyQuery(currencies) {
@@ -60,10 +62,12 @@ class Index {
 
 	/**
 	 * @description Method that respond if error
+	 * @param msg String error message
+	 * @param url String route
 	 * @returns Object
 	 */
-	static async response(msg, url, api = 'Currency-Rate-API') {
-		return { api, url, msg };
+	static async response(message = 'An error occurred', url, api = 'Currency-Rate-API') {
+		return { api, url, message };
 	}
 }
 
