@@ -1,0 +1,30 @@
+{
+	"name": "currency-rates-api",
+	"version": "1.0.0",
+	"description": "currency rates api using node",
+	"main": "app.js",
+	"scripts": {
+		"start": "nodemon ./src/app"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Collinsboss18/currency-rates-api.git"
+	},
+	"keywords": [
+		"Node-Js",
+		"Express"
+	],
+	"author": "Collins Abadaike",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Collinsboss18/currency-rates-api/issues"
+	},
+	"homepage": "https://github.com/Collinsboss18/currency-rates-api#readme",
+	"devDependencies": {
+		"nodemon": "^2.0.7"
+	},
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"express": "^4.17.1"
+	}
+}
