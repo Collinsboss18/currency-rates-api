@@ -3,14 +3,17 @@
  * @file App Index Controller
  */
 
+let base;
+let currencies;
+
 class Index {
 	/**
-	 * @description Verify route params
-	 * @return Success: next()
-	 * @return Error: status 401
+	 * @description Get result
+	 * @return Object {base, date, rates}
 	 */
 	static async getKeys(req, res) {
-		// console.log(req.params);
+		base = req.query.base;
+		currencies = req.query.currency;
 	}
 }
 

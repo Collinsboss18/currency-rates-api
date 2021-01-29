@@ -17,15 +17,15 @@ class Index {
 					if (await Index.verifyCurrencyQuery(req.query.currency)) {
 						next();
 					}
-					res.status(401).json(Index.response('Unable to verify currency params', url));
+					return res.status(401).json(await Index.response('Unable to verify currency params', url));
 				} else {
-					res.status(401).json(Index.response('Unable to verify base param', url));
+					return res.status(401).json(await Index.response('Unable to verify base param', url));
 				}
 			}
-			res.status(401).json(await Index.response('Unable to verify query. Check that all query are set', url));
+			return res.status(401).json(await Index.response('Unable to verify query. Check that all query are set', url));
 		} catch (err) {
 			console.log(err);
-			res.status(401).json(Index.response('Unable to verify query. Check that all query are set', url));
+			return res.status(401).json(await Index.response('Unable to verify query. Check that all query are set', url));
 		}
 	}
 
