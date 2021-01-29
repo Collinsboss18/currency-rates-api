@@ -10,20 +10,22 @@ class Index {
 	 * @return Error: status 401
 	 */
 	static async verifyParams(req, res, next) {
+		let url = `${req.headers.host}${req.originalUrl}`;
 		try {
 			if (req.query.base && req.query.currency) {
 				if (await Index.verifyBaseQuery(req.query.base)) {
 					if (await Index.verifyCurrencyQuery(req.query.currency)) {
-						console.log('Verified');
+						next();
 					}
-					res.status(401).json({ msg: 'Unable to verify currency params' });
+					res.status(401).json(Index.response('Unable to verify currency params', url));
 				} else {
-					res.status(401).json({ msg: 'Unable to verify base param' });
+					res.status(401).json(Index.response('Unable to verify base param', url));
 				}
 			}
-			res.status(401).json({ msg: 'Unable to verify params' });
+			res.status(401).json(await Index.response('Unable to verify query. Check that all query are set', url));
 		} catch (err) {
-			res.status(401).json({ msg: 'Unable to verify param' });
+			console.log(err);
+			res.status(401).json(Index.response('Unable to verify query. Check that all query are set', url));
 		}
 	}
 
@@ -54,6 +56,14 @@ class Index {
 			console.log('error', error);
 			return false;
 		}
+	}
+
+	/**
+	 * @description Method that respond if error
+	 * @returns Object
+	 */
+	static async response(msg, url, api = 'Currency-Rate-API') {
+		return { api, url, msg };
 	}
 }
 
