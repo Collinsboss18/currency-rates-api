@@ -13,7 +13,7 @@ class Index {
 	 */
 	static async getKeys(req, res) {
 		base = req.query.base;
-		currencies = req.query.currency;
+		currencies = req.query.currencies;
 	}
 }
 
