@@ -1,2 +1,2 @@
-# Ignore modules folder
+./node_modules
 node_modules
