@@ -2,8 +2,8 @@
 
 #### Technologies
 
--   Node Js
--   Express
+-   Node Js [Documentation](https://nodejs.org/en/docs)
+-   Express [Documentation](https://www.npmjs.com/package/express)
 
 > Route /api/rates
 
