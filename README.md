@@ -17,14 +17,14 @@
 
 ##### On Success
 
--   Result
+-   Result - Result containing result info
     -   Base - The requested home rate
     -   Date - Current date
     -   Rates - Object of requested currency
 
 ##### On Error
 
--   Error
+-   Error - Object containing error info
     -   API - API name
     -   URL - Url
     -   Message - Error message
