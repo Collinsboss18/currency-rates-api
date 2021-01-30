@@ -23,12 +23,13 @@ class Index {
 			request({ method: 'get', url: `https://api.exchangeratesapi.io/latest?base=${base}` })
 				.then(async (response) => {
 					let data = await Index.prepareData(response.data);
-					console.log(data);
+					if (data) return res.status(200).json(data);
+					return res.status(500).json(await Index.response('Response unavailable try a different query', url));
 				})
 				.catch((error) => reject(new Error(error)));
 		}).catch((err) => {
 			console.log(err);
-			return Index.response('An error occurred. Try again...', url);
+			return res.status(405).json(Index.response('An error occurred. Try again...', url));
 		});
 	}
 
