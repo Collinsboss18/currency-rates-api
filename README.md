@@ -7,8 +7,6 @@
 
 > Route /api/rates
 
----
-
 > Queries: 1. Base - The home currency rates to be quoted against (e.g. CZK);
 
 > Queries: 2. Currency - The specific exchange rates (e.g. EUR,GBP,USD).
