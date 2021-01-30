@@ -15,6 +15,7 @@ class Index {
 	 * @return Object {base, date, rates}
 	 */
 	static async getKeys(req, res) {
+		let url = `${req.headers.host}${req.originalUrl}`;
 		base = req.query.base;
 		currencies = req.query.currency;
 
@@ -27,7 +28,7 @@ class Index {
 				.catch((error) => reject(new Error(error)));
 		}).catch((err) => {
 			console.log(err);
-			return res.status(500).json({ message: 'Error. Try again...' });
+			return Index.response('An error occurred. Try again...', url);
 		});
 	}
 
@@ -47,6 +48,7 @@ class Index {
 
 	/**
 	 * @description Get result
+	 * @param data Object {{}}
 	 * @return Object {base, date, rates}
 	 */
 	static async prepareData(data) {
@@ -84,7 +86,10 @@ class Index {
 	}
 
 	/**
-	 * @description Method that respond if error
+	 * @description Method that handles response data
+	 * @param base Currency base gotten from exchange api
+	 * @param data Date updated gotten from exchange api
+	 * @param rates Object's
 	 * @returns Object
 	 */
 	static async dataResponse(base, date, rates) {
@@ -93,6 +98,8 @@ class Index {
 
 	/**
 	 * @description Method that respond if error
+	 * @param msg String error message
+	 * @param url String route
 	 * @returns Object
 	 */
 	static async response(msg, url, api = 'Currency-Rate-API') {
