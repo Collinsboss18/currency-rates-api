@@ -16,16 +16,16 @@ class Index {
 				if (await Index.verifyBaseQuery(req.query.base)) {
 					(await Index.verifyCurrencyQuery(req.query.currency))
 						? next()
-						: res.status(400).json(await Index.response('Unable to verify currency params', url));
+						: res.status(400).json({ error: await Index.response('Unable to verify currency params', url) });
 				} else {
-					return res.status(400).json(await Index.response('Unable to verify base param', url));
+					return res.status(400).json({ error: await Index.response('Unable to verify base param', url) });
 				}
 			} else {
-				return res.status(405).json(await Index.response('Unable to verify query. Check that all query are set', url));
+				return res.status(405).json({ error: await Index.response('Unable to verify query. Check that all query are set', url) });
 			}
 		} catch (err) {
 			console.log(err);
-			return res.status(405).json(await Index.response('Unable to verify query. Check that all query are set', url));
+			return res.status(405).json({ error: await Index.response('Unable to verify query. Check that all query are set', url) });
 		}
 	}
 

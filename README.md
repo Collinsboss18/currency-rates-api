@@ -21,7 +21,10 @@
     -   Base - The requested home rate
     -   Date - Current date
     -   Rates - Object of requested currency
--   On error
+
+##### On Error
+
+-   Error
     -   API - API name
     -   URL - Url
     -   Message - Error message
