@@ -16,5 +16,8 @@ app.use(express.json({ extended: false }));
 /** @action Define Routes */
 app.use('/api/rates', require('./routes'));
 
+/** default route */
+app.get('*', (req, res) => res.send('Visit API route at "/api/rates", queries {base, currency}'));
+
 /** Start Server */
 const server = app.listen(app.get('PORT'), () => console.log(`Server running on PORT → ${server.address().port}`));
