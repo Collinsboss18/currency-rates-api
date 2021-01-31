@@ -8,8 +8,6 @@ let { dataResponse, errorResponse } = require('../services/Response');
 let currencies;
 let base;
 
-// console.log(fullResponse);
-
 class Index {
 	/**
 	 * @description Gets Response
@@ -44,7 +42,6 @@ class Index {
 			if (typeof currencies === 'string' || currencies instanceof String) return { type: 'STRING' };
 			if (Array.isArray(currencies)) return { type: 'OBJECT' };
 		} catch (error) {
-			console.log('error', error);
 			return false;
 		}
 	}
@@ -83,7 +80,6 @@ class Index {
 				return await dataResponse(data.base, data.date, toObject(concat));
 			}
 		} catch (error) {
-			console.log('error', error);
 			return false;
 		}
 	}

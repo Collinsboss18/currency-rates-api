@@ -26,7 +26,6 @@ class Index {
 				return res.status(405).json({ error: await errorResponse('Unable to verify query. Check that all query are set', url) });
 			}
 		} catch (err) {
-			console.log(err);
 			return res.status(405).json({ error: await errorResponse('Unable to verify query. Check that all query are set', url) });
 		}
 	}
@@ -42,7 +41,6 @@ class Index {
 			if (Array.isArray(currencies)) return true;
 			return false;
 		} catch (error) {
-			console.log('error', error);
 			return false;
 		}
 	}
@@ -57,7 +55,6 @@ class Index {
 			if (base.length >= 1 && base.length <= 5) return true;
 			return false;
 		} catch (error) {
-			console.log('error', error);
 			return false;
 		}
 	}
