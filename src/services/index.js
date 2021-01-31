@@ -3,6 +3,8 @@
  * @action Handles api services
  */
 
+let { errorResponse } = require('./Response');
+
 class Index {
 	/**
 	 * @description Verify route params
@@ -16,31 +18,16 @@ class Index {
 				if (await Index.verifyBaseQuery(req.query.base)) {
 					(await Index.verifyCurrencyQuery(req.query.currency))
 						? next()
-						: res.status(400).json({ error: await Index.response('Unable to verify currency params', url) });
+						: res.status(400).json({ error: await errorResponse('Unable to verify currency params', url) });
 				} else {
-					return res.status(400).json({ error: await Index.response('Unable to verify base param', url) });
+					return res.status(400).json({ error: await errorResponse('Unable to verify base param', url) });
 				}
 			} else {
-				return res.status(405).json({ error: await Index.response('Unable to verify query. Check that all query are set', url) });
+				return res.status(405).json({ error: await errorResponse('Unable to verify query. Check that all query are set', url) });
 			}
 		} catch (err) {
 			console.log(err);
-			return res.status(405).json({ error: await Index.response('Unable to verify query. Check that all query are set', url) });
-		}
-	}
-
-	/**
-	 * @description Method to verify base query
-	 * @param base String (base string e.g USD)
-	 * @returns Boolean
-	 */
-	static async verifyBaseQuery(base) {
-		try {
-			if (base.length >= 1 && base.length <= 5) return true;
-			return false;
-		} catch (error) {
-			console.log('error', error);
-			return false;
+			return res.status(405).json({ error: await errorResponse('Unable to verify query. Check that all query are set', url) });
 		}
 	}
 
@@ -61,13 +48,18 @@ class Index {
 	}
 
 	/**
-	 * @description Method that respond if error
-	 * @param msg String error message
-	 * @param url String route
-	 * @returns Object
+	 * @description Method to verify base query
+	 * @param base String (base string e.g USD)
+	 * @returns Boolean
 	 */
-	static async response(message = 'An error occurred', url, api = 'Currency-Rate-API') {
-		return { api, url, message };
+	static async verifyBaseQuery(base) {
+		try {
+			if (base.length >= 1 && base.length <= 5) return true;
+			return false;
+		} catch (error) {
+			console.log('error', error);
+			return false;
+		}
 	}
 }
 

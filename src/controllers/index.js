@@ -4,6 +4,7 @@
  */
 
 const request = require('axios');
+let { dataResponse, errorResponse } = require('../services/Response');
 let currencies;
 let base;
 
@@ -23,13 +24,14 @@ class Index {
 			request({ method: 'get', url: `https://api.exchangeratesapi.io/latest?base=${base}` })
 				.then(async (response) => {
 					let data = await Index.prepareData(response.data);
-					if (data) return res.status(200).json({ results: data });
-					return res.status(500).json({ error: await Index.response('Response unavailable try a different query', url) });
+					if (data) return resolve(res.status(200).json({ results: data }));
+					return res.status(500).json({ error: await errorResponse('Response unavailable try a different query', url) });
 				})
-				.catch((error) => reject(new Error(error)));
+				.catch((error) => reject(error));
 		}).catch((err) => {
-			console.log(err);
-			return res.status(405).json({ error: Index.response('An error occurred. Try again...', url) });
+			errorResponse(err.message, url).then((result) => {
+				return res.status(400).json({ error: result });
+			});
 		});
 	}
 
@@ -66,7 +68,7 @@ class Index {
 					return obj;
 				};
 				let rates = await getRates(dataRates, currencies);
-				return await Index.dataResponse(data.base, data.date, rates);
+				return await dataResponse(data.base, data.date, rates);
 			}
 
 			if (currencyType.type == 'STRING') {
@@ -78,33 +80,12 @@ class Index {
 					for (var i = 0; i < 1; ++i) rv[currency] = arr[1];
 					return rv;
 				}
-				return await Index.dataResponse(data.base, data.date, toObject(concat));
+				return await dataResponse(data.base, data.date, toObject(concat));
 			}
 		} catch (error) {
 			console.log('error', error);
 			return false;
 		}
-	}
-
-	/**
-	 * @description Method that handles response data
-	 * @param base Currency base gotten from exchange api
-	 * @param data Date updated gotten from exchange api
-	 * @param rates Object's
-	 * @returns Object
-	 */
-	static async dataResponse(base, date, rates) {
-		return { base, date, rates };
-	}
-
-	/**
-	 * @description Method that respond if error
-	 * @param msg String error message
-	 * @param url String route
-	 * @returns Object
-	 */
-	static async response(msg, url, api = 'Currency-Rate-API') {
-		return { api, url, msg };
 	}
 }
 
