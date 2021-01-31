@@ -13,6 +13,6 @@ const { verifyParams } = require('../services');
  * @param base: The home currency rates to be quoted against (i.e. CZK)
  * @param currency: The specific exchange rates based on a comma-separated symbols parameter (i.e. EUR,GBP,USD).
  */
-router.get('/', verifyParams, getKeys);
+router.get('/', verifyParams, getResponse);
 
 module.exports = router;
