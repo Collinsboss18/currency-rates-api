@@ -4,7 +4,7 @@
  */
 
 const router = require('express').Router();
-const { getKeys } = require('../controllers');
+const { getResponse } = require('../controllers');
 const { verifyParams } = require('../services');
 
 /**

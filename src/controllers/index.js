@@ -12,10 +12,10 @@ let base;
 
 class Index {
 	/**
-	 * @description Get result
+	 * @description Gets Response
 	 * @return Object {base, date, rates}
 	 */
-	static async getKeys(req, res) {
+	static async getResponse(req, res) {
 		let url = `${req.headers.host}${req.originalUrl}`;
 		base = req.query.base;
 		currencies = req.query.currency;
@@ -36,7 +36,7 @@ class Index {
 	}
 
 	/**
-	 * @description Get result
+	 * @description Get Query Type
 	 * @return Object {base, date, rates}
 	 */
 	static async getCurrencyType(req, res) {
@@ -50,9 +50,9 @@ class Index {
 	}
 
 	/**
-	 * @description Get result
+	 * @description Prepare for response
 	 * @param data Object {{}}
-	 * @return Object {base, date, rates}
+	 * @return Object {base, date, rates{}}
 	 */
 	static async prepareData(data) {
 		try {
