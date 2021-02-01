@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"description": "currency rates api using node",
 	"main": "app.js",
+	"engines": {
+	    "node": "10.x"
+	},
 	"scripts": {
 		"start": "nodemon ./src/app"
 	},
