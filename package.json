@@ -7,7 +7,7 @@
 		"node": "10.x"
 	},
 	"scripts": {
-		"start": "nodemon ./src/app"
+		"start": "node src/app"
 	},
 	"repository": {
 		"type": "git",
