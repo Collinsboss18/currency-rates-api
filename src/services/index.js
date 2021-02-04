@@ -14,16 +14,12 @@ class Index {
 	static async verifyParams(req, res, next) {
 		let url = `${req.headers.host}${req.originalUrl}`;
 		try {
-			if (req.query.base && req.query.currency) {
-				if (await Index.verifyBaseQuery(req.query.base)) {
-					(await Index.verifyCurrencyQuery(req.query.currency))
-						? next()
-						: res.status(400).json({ error: await errorResponse('Unable to verify currency params', url) });
-				} else {
-					return res.status(400).json({ error: await errorResponse('Unable to verify base param', url) });
-				}
+			if (await Index.verifyBaseQuery(req.query.base)) {
+				(await Index.verifyCurrencyQuery(req.query.currency))
+					? next()
+					: res.status(400).json({ error: await errorResponse('Unable to verify currency params', url) });
 			} else {
-				return res.status(405).json({ error: await errorResponse('Unable to verify query. Check that all query are set', url) });
+				return res.status(400).json({ error: await errorResponse('Unable to verify base param', url) });
 			}
 		} catch (err) {
 			return res.status(405).json({ error: await errorResponse('Unable to verify query. Check that all query are set', url) });

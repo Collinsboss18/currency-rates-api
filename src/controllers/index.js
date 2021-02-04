@@ -15,8 +15,8 @@ class Index {
 	 */
 	static async getResponse(req, res) {
 		let url = `${req.headers.host}${req.originalUrl}`;
-		base = req.query.base;
-		currencies = req.query.currency;
+		base = req.query.base || 'CZK';
+		currencies = req.query.currency || 'USD';
 
 		return new Promise((resolve, reject) => {
 			request({ method: 'get', url: `https://api.exchangeratesapi.io/latest?base=${base}` })
