@@ -60,7 +60,7 @@ class Index {
 				const getRates = (rates, currencies) => {
 					let obj = {};
 					currencies.forEach((data) => {
-						obj[data] = rates[data];
+						obj[data] = rates[data] || 'Currency is not supported';
 					});
 					return obj;
 				};
@@ -74,7 +74,7 @@ class Index {
 				let concat = currency.concat(value);
 				function toObject(arr) {
 					var rv = {};
-					for (var i = 0; i < 1; ++i) rv[currency] = arr[1];
+					for (var i = 0; i < 1; ++i) rv[currency] = arr[1] || 'currency is not supported';
 					return rv;
 				}
 				return await dataResponse(data.base, data.date, toObject(concat));

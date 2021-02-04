@@ -22,6 +22,7 @@ class Response {
 	 * @returns Object
 	 */
 	static async errorResponse(msg, url, api = 'Currency-Rate-API') {
+		console.log(msg);
 		return { api, url, msg };
 	}
 }
